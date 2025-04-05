@@ -6,7 +6,7 @@ import React from "react";
 const page = () => {
   return (
     <div>
-      <div className="sticky top-0  flex items-center justify-center h-15 bg-black border-b-gray-50/50 ">
+      <div className="sticky top-0 flex items-center justify-center h-15 bg-black border-b-gray-50/50 ">
         <span className="text-white text-2xl font-semibold">Socio</span>
       </div>
       <main className="">

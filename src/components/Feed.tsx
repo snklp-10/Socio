@@ -4,7 +4,6 @@ import axios from "axios";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import heart from "../../public/heart-svgrepo-com.svg";
-import { Button } from "./ui/button";
 
 interface Post {
   _id: string;
@@ -20,6 +19,7 @@ interface Post {
 
 const Feed = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -34,7 +34,18 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
-  const [liked, setLiked] = useState(false);
+  const toggleLike = (postId: string) => {
+    setLikedPosts((prevLiked) => {
+      const updated = new Set(prevLiked);
+      if (updated.has(postId)) {
+        updated.delete(postId);
+      } else {
+        updated.add(postId);
+      }
+      return updated;
+    });
+  };
+
   return (
     <div className="flex flex-col space-y-4 py-6 bg-black">
       {posts.map((post) => (
@@ -66,18 +77,17 @@ const Feed = () => {
           <div className="mt-4 flex ">
             <button
               className="text-rose-500 flex gap-2 "
-              onClick={() => setLiked(!liked)}
+              onClick={() => toggleLike(post._id)}
             >
               <span>
-                {liked ? (
+                {likedPosts.has(post._id) ? (
                   <Image src={heart} alt="Liked" width={24} height={24} />
                 ) : (
                   <Heart />
                 )}
               </span>
-              {liked ? "Liked" : "Like"} {/* Toggle text */}
+              {likedPosts.has(post._id) ? "Liked" : "Like"}
             </button>
-            {/* <button className="ml-4 text-blue-500">Comment</button> */}
           </div>
         </div>
       ))}
