@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <h3>Membership Form</h3>
+        <form id="membershipForm">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+      
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+      
+          <label for="phone">Phone:</label>
+          <input type="tel" id="phone" name="phone" required pattern="[0-9\-+\s()]{7,}">
+      
+          <label for="membershipType">Membership Type:</label>
+          <select id="membershipType" name="membershipType" required>
+            <option value="">--Select--</option>
+            <option value="Standard">Standard</option>
+            <option value="Premium">Premium</option>
+            <option value="VIP">VIP</option>
+          </select>
+      
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+      
+          <input type="submit" value="Submit">
+        </form>
+        <div id="message" class="message"></div>
+      </div>
+
+      <script>
+        // Encode string to Base64
+        function toBase64(str) {
+          return btoa(unescape(encodeURIComponent(str.trim())));
+        }
+      
+        const allowedMembers = [
+          "Sm9obiBEb2V8am9obkBleGFtcGxlLmNvbXwxMjMtNDU2LTc4OTB8UHJlbWl1bXxwYXNzMTIz", // John Doe|john@example.com|123-456-7890|Premium|pass123
+          "SmFuZSBTbWl0aHxqYW5lQGV4YW1wbGUuY29tfDEyMy00NTYtNzg5MHxTVEFOREFSRCxwYXNzd29yZA==", // Jane Smith|jane@example.com|123-456-7890|STANDARD|password (example)
+        ];
+      
+        document.getElementById("membershipForm").addEventListener("submit", function(event){
+          event.preventDefault();
+      
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const phone = document.getElementById("phone").value;
+          const membershipType = document.getElementById("membershipType").value;
+          const password = document.getElementById("password").value;
+      
+          // Concatenate form values with pipe separator
+          const combined = `${name}|${email}|${phone}|${membershipType}|${password}`;
+          const encrypted = toBase64(combined);
+      
+          const messageDiv = document.getElementById("message");
+      
+          if (allowedMembers.includes(encrypted)) {
+            console.log(`Verified: ${combined}`);
+            messageDiv.style.color = "green";
+            messageDiv.textContent = "Membership verified successfully!";
+          } else {
+            console.log("Member not recognized");
+            messageDiv.style.color = "red";
+            messageDiv.textContent = "Membership not recognized. Please check your details.";
+          }
+        });
+      </script>
+</body>
+
+</html>

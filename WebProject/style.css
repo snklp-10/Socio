@@ -1,0 +1,35 @@
+body {
+    background-color: #ffffff;
+  }
+  .form-container {
+    background-color: #9b9592;
+    padding: 40px;
+    border-radius: 20px;
+    width: 350px;
+    margin: 100px auto;
+    text-align: left;
+    font-family: Arial, sans-serif;
+  }
+  label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="password"], select {
+    width: 100%;
+    padding: 7px;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    margin-top: 15px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  h3 {
+    color: #2d2835;
+    text-align: center;
+  }
+  .message {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
